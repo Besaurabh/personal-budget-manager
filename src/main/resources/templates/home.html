@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Smart Tools | Budget Manager</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a2c5d5d34a.js" crossorigin="anonymous"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #654ea3, #eaafc8);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px 40px;
+            font-size: 24px;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logout {
+            font-size: 14px;
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        .features-section {
+            background: white;
+            color: #333;
+            border-radius: 16px;
+            padding: 40px;
+            width: 100%;
+            max-width: 1200px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            margin-bottom: 40px;
+        }
+
+        .features-section h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #654ea3;
+        }
+
+        .features-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 30px;
+        }
+
+        .feature {
+            flex: 1 1 calc(25% - 30px);
+            text-align: center;
+            padding: 20px;
+            border-radius: 12px;
+            background: #f9f9f9;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            min-width: 250px;
+        }
+
+        .feature:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature i {
+            font-size: 36px;
+            color: #654ea3;
+            margin-bottom: 10px;
+        }
+
+        .feature h3 {
+            margin: 10px 0;
+            color: #333;
+        }
+
+        .feature p {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .btn-container {
+            margin-top: 10px;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #654ea3, #eaafc8);
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            cursor: pointer;
+            text-decoration: none;
+            margin: 5px;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        .contact-section {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            max-width: 700px;
+            width: 100%;
+            color: #333;
+            margin-bottom: 40px;
+        }
+
+        .contact-section h3 {
+            color: #654ea3;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .contact-section form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .contact-section input,
+        .contact-section textarea {
+            padding: 12px;
+            margin-bottom: 16px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .contact-section button {
+            background: linear-gradient(135deg, #654ea3, #eaafc8);
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .contact-section button:hover {
+            opacity: 0.9;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 14px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .features-row {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .feature {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    Smart Tools for Smarter Money
+    <form th:action="@{/logout}" method="post">
+        <button class="logout" type="submit">Logout</button>
+    </form>
+</header>
+
+<main>
+    <section class="features-section">
+        <h2>Explore Your Personal Budget Toolkit</h2>
+		<div class="features-row">
+		    <div class="feature">
+		        <i class="fas fa-wallet"></i>
+		        <h3>Manage Income</h3>
+		        <p>Securely log and manage all your income sources.</p>
+		        <div class="btn-container">
+		            <a href="/income/add" class="btn">➕ Add Income</a>
+		            <a href="/income/history" class="btn">📄 View Income</a>
+		        </div>
+		    </div>
+
+		    <div class="feature">
+		        <i class="fas fa-money-bill-wave"></i>
+		        <h3>Track Expenses</h3>
+		        <p>Record daily expenses and categorize them easily.</p>
+		        <div class="btn-container">
+		            <a href="/expense/add" class="btn">➕ Add Expense</a>
+		            <a href="/expense/history" class="btn">📋 View Expenses</a>
+		        </div>
+		    </div>
+
+		    <div class="feature">
+		        <i class="fas fa-chart-pie"></i>
+		        <h3>Analytics</h3>
+		        <p>Visualize your spending habits with intuitive charts.</p>
+		        <div class="btn-container">
+		            <a href="/analytics" class="btn">📊 View Analytics</a>
+		        </div>
+		    </div>
+
+		    <!-- 🔄 Replaced Export PDF with Smart Savings Tip -->
+		    <div class="feature">
+		        <i class="fas fa-lightbulb"></i>
+		        <h3>Smart Savings Tip</h3>
+		        <p>Get AI-based suggestions to improve your monthly savings.</p>
+		        <div class="btn-container">
+		            <a href="/savings/tips" class="btn">💡 View Tip</a>
+		        </div>
+		    </div>
+		</div>
+    </section>
+
+    <section class="contact-section">
+        <h3>Contact Us</h3>
+        <form method="post" th:action="@{/contact-message}">
+            <input type="text" name="name" placeholder="Your Name" required>
+            <input type="email" name="email" placeholder="Your Email" required>
+            <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+            <button type="submit">Send Message</button>
+        </form>
+    </section>
+</main>
+
+<footer>
+    &copy; 2025 Saurabh Singh. All rights reserved.
+</footer>
+
+</body>
+</html>

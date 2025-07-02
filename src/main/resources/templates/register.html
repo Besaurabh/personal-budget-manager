@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Register | Budget Manager</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #654ea3, #eaafc8);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            display: flex;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            width: 900px;
+            height: 550px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .left {
+            flex: 1;
+            background: linear-gradient(135deg, #654ea3, #eaafc8);
+            color: white;
+            padding: 60px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .left h2 {
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        .left p {
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        .right {
+            flex: 1;
+            padding: 60px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .right h3 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        button {
+            background: linear-gradient(135deg, #654ea3, #eaafc8);
+            border: none;
+            color: white;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .login-link {
+            margin-top: 15px;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .login-link a {
+            color: #654ea3;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="left">
+        <h2>Create an Account</h2>
+        <p>Get started with managing your personal budget. Add income, expenses, and generate insightful reports!</p>
+    </div>
+    <div class="right">
+        <h3>User Registration</h3>
+        <form th:action="@{/register}" method="post" th:object="${user}">
+            <div class="form-group">
+                <input type="text" th:field="*{fullName}" placeholder="Full Name" required>
+            </div>
+            <div class="form-group">
+                <input type="text" th:field="*{username}" placeholder="Username" required>
+            </div>
+            <div class="form-group">
+                <input type="password" th:field="*{password}" placeholder="Password" required>
+            </div>
+            <button type="submit">Register</button>
+        </form>
+        <div class="login-link">
+            Already have an account? <a th:href="@{/login}">Login</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
