@@ -16,19 +16,22 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests()
-            .requestMatchers("/", "/register", "/login", "/css/**").permitAll()
+                .requestMatchers("/register", "/login", "/css/**", "/images/**", "/js/**", "/").permitAll()
                 .anyRequest().authenticated()
             .and()
                 .formLogin()
-                    .loginPage("/login")
-                    .defaultSuccessUrl("/dashboard", true)
+                    .loginPage("/login")                      // custom login page
+                    .defaultSuccessUrl("/", true)             // redirect here after successful login
                     .permitAll()
             .and()
-            .logout()
-            .logoutSuccessUrl("/")  // ✅ this fixes Whitelabel on logout
-            .permitAll()
-        .and()
-            .csrf().disable();
+                .logout()
+                    .logoutUrl("/logout")                     // handled automatically by Spring
+                    .logoutSuccessUrl("/login?logout")        // after logout, redirect to login with query param
+                    .invalidateHttpSession(true)
+                    .deleteCookies("JSESSIONID")
+                    .permitAll()
+            .and()
+                .csrf().disable(); // ❗ disable only during dev — enable it later for security
         return http.build();
     }
 
@@ -44,7 +47,7 @@ public class SecurityConfig {
 
     @Bean
     public DaoAuthenticationProvider authenticationProvider(UserDetailsService userDetailsService,
-                                                            BCryptPasswordEncoder passwordEncoder) {
+                                                             BCryptPasswordEncoder passwordEncoder) {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setUserDetailsService(userDetailsService);
         provider.setPasswordEncoder(passwordEncoder);

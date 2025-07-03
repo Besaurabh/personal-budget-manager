@@ -89,6 +89,13 @@
             opacity: 0.9;
         }
 
+        .success-message {
+            color: green;
+            text-align: center;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
         .back-link {
             text-align: center;
             margin-top: 20px;
@@ -111,6 +118,10 @@
 <main>
     <div class="form-card">
         <h2>Add Expense</h2>
+
+        <!-- ✅ SUCCESS MESSAGE BLOCK -->
+        <div th:if="${message}" class="success-message" th:text="${message}"></div>
+
         <form th:action="@{/expense/add}" th:object="${expense}" method="post">
             <label for="category">Category</label>
             <input type="text" id="category" th:field="*{category}" placeholder="e.g. Food, Rent" required>

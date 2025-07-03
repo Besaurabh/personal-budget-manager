@@ -66,7 +66,8 @@
 
         input[type="text"],
         input[type="number"],
-        input[type="date"] {
+        input[type="date"],
+        select {
             width: 100%;
             padding: 10px;
             margin-bottom: 20px;
@@ -98,6 +99,14 @@
             color: #654ea3;
             text-decoration: none;
         }
+
+        /* ✅ Success message styling */
+        .success-message {
+            color: green;
+            text-align: center;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -111,29 +120,32 @@
 <main>
     <div class="form-card">
         <h2>Add Income</h2>
-		<form th:action="@{/income/add}" th:object="${income}" method="post">
-		    <label for="source">Source</label>
-		    <input type="text" id="source" th:field="*{source}" placeholder="e.g. Salary, Freelance" required>
 
-		    <label for="amount">Amount</label>
-		    <input type="number" id="amount" th:field="*{amount}" placeholder="Enter amount" required>
+        <!-- ✅ Success Message -->
+        <div th:if="${message}" class="success-message" th:text="${message}"></div>
 
-		    <label for="date">Date</label>
-		    <input type="date" id="date" th:field="*{date}" required>
+        <form th:action="@{/income/add}" th:object="${income}" method="post">
+            <label for="source">Source</label>
+            <input type="text" id="source" th:field="*{source}" placeholder="e.g. Salary, Freelance" required>
 
-		    <!-- ✅ New Category Field -->
-		    <label for="category">Category</label>
-		    <select id="category" th:field="*{category}" required>
-		        <option value="">-- Select Category --</option>
-		        <option value="Job">Job</option>
-		        <option value="Freelance">Freelance</option>
-		        <option value="Investment">Investment</option>
-		        <option value="Gift">Gift</option>
-		        <option value="Other">Other</option>
-		    </select>
+            <label for="amount">Amount</label>
+            <input type="number" id="amount" th:field="*{amount}" placeholder="Enter amount" required>
 
-		    <button type="submit">Save Income</button>
-		</form>
+            <label for="date">Date</label>
+            <input type="date" id="date" th:field="*{date}" required>
+
+            <label for="category">Category</label>
+            <select id="category" th:field="*{category}" required>
+                <option value="">-- Select Category --</option>
+                <option value="Job">Job</option>
+                <option value="Freelance">Freelance</option>
+                <option value="Investment">Investment</option>
+                <option value="Gift">Gift</option>
+                <option value="Other">Other</option>
+            </select>
+
+            <button type="submit">Save Income</button>
+        </form>
 
         <div class="back-link">
             <a th:href="@{/}">← Back to Smart Toolkit</a>

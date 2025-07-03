@@ -26,18 +26,21 @@ public class IncomeController {
 
     // Show form to add new income
     @GetMapping("/add")
-    public String showIncomeForm(Model model) {
+    public String showIncomeForm(@RequestParam(value = "success", required = false) String success,
+                                 Model model) {
         model.addAttribute("income", new Income());
-        return "add-income"; // Make sure templates/add-income.html exists
+        if (success != null) {
+            model.addAttribute("message", "Income successfully added!");
+        }
+        return "add-income";
     }
 
-    // Save new income
     @PostMapping("/add")
     public String saveIncome(@ModelAttribute("income") Income income,
                              @AuthenticationPrincipal UserDetails userDetails) {
 
         if (userDetails == null) {
-            return "redirect:/login"; // In case not logged in
+            return "redirect:/login";
         }
 
         User user = userRepository.findByUsername(userDetails.getUsername())
@@ -45,7 +48,7 @@ public class IncomeController {
         income.setUser(user);
         incomeRepository.save(income);
 
-        return "redirect:/home";
+        return "redirect:/income/add?success";  // ✅ show success after redirect
     }
 
     // View income history

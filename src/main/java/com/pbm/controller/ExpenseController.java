@@ -26,21 +26,30 @@ public class ExpenseController {
 
     // Show expense add form
     @GetMapping("/add")
-    public String showExpenseForm(Model model) {
+    public String showExpenseForm(@RequestParam(value = "success", required = false) String success,
+                                  Model model) {
         model.addAttribute("expense", new Expense());
-        return "add-expense"; // Thymeleaf template name
+        if (success != null) {
+            model.addAttribute("message", "Expense successfully added!");
+        }
+        return "add-expense"; // Thymeleaf template
     }
+
 
     // Save expense after form submission
     @PostMapping("/add")
     public String saveExpense(@ModelAttribute Expense expense,
-                              @AuthenticationPrincipal UserDetails userDetails) {
+                              @AuthenticationPrincipal UserDetails userDetails,
+                              Model model) {
         User user = userRepository.findByUsername(userDetails.getUsername())
                                   .orElseThrow(() -> new RuntimeException("User not found"));
         expense.setUser(user);
         expenseRepository.save(expense);
-        return "redirect:/home";
+
+        // Use redirect with query param to indicate success
+        return "redirect:/expense/add?success";
     }
+
 
     // Show history of expenses
     @GetMapping("/history")
