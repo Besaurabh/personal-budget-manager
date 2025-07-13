@@ -1,26 +1,15 @@
-# Stage 1: Build the application using Maven
-FROM maven:3.9.3-eclipse-temurin-17 AS build
-
-# Set working directory
+# ----- Build Stage -----
+FROM maven:3.9.6-eclipse-temurin-17 as build
 WORKDIR /app
-
-# Copy the project files into the container
 COPY . .
-
-# Build the project (skipping tests for faster build)
 RUN mvn clean package -DskipTests
 
-# Stage 2: Run the application using OpenJDK
-FROM openjdk:17-jdk-slim
-
-# Set working directory in the container
+# ----- Run Stage -----
+FROM eclipse-temurin:17-jdk-alpine
 WORKDIR /app
 
-# Copy the JAR file from the build stage
+# Copy the JAR from build stage
 COPY --from=build /app/target/personal-budget-manager-0.0.1-SNAPSHOT.jar app.jar
 
-# Expose port (optional, Render handles this internally)
-EXPOSE 8080
-
-# Command to run the JAR
+# Run the app
 CMD ["java", "-jar", "app.jar"]
