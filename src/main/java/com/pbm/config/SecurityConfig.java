@@ -21,7 +21,7 @@ public class SecurityConfig {
             .and()
                 .formLogin()
                     .loginPage("/login")                      // custom login page
-                    .defaultSuccessUrl("/", true)             // redirect here after successful login
+                    .defaultSuccessUrl("/dashboard", true)             // redirect here after successful login
                     .permitAll()
             .and()
                 .logout()
