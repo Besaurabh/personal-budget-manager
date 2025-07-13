@@ -1,14 +1,26 @@
-# Use OpenJDK as base image
-FROM openjdk:17-jdk-slim
+# Stage 1: Build the application using Maven
+FROM maven:3.9.3-eclipse-temurin-17 AS build
 
-# Set the working directory inside the container
+# Set working directory
 WORKDIR /app
 
-# Copy the built jar file into the container
-COPY target/personal-budget-manager-0.0.1-SNAPSHOT.jar app.jar
+# Copy the project files into the container
+COPY . .
 
-# Set environment variable
-ENV PORT=8080
+# Build the project (skipping tests for faster build)
+RUN mvn clean package -DskipTests
 
-# Command to run the application
+# Stage 2: Run the application using OpenJDK
+FROM openjdk:17-jdk-slim
+
+# Set working directory in the container
+WORKDIR /app
+
+# Copy the JAR file from the build stage
+COPY --from=build /app/target/personal-budget-manager-0.0.1-SNAPSHOT.jar app.jar
+
+# Expose port (optional, Render handles this internally)
+EXPOSE 8080
+
+# Command to run the JAR
 CMD ["java", "-jar", "app.jar"]
