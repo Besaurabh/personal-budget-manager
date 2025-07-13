@@ -12,6 +12,7 @@ RUN mvn clean package -DskipTests
 FROM openjdk:17-jdk-slim
 WORKDIR /app
 
-COPY --from=build /app/target/personal-budget-manager-0.0.1-SNAPSHOT.jar app.jar
+# 👇 Use the correct JAR file name (copy this exactly as shown in logs)
+COPY --from=build /app/target/Personal_Budget_Manager-0.0.1-SNAPSHOT.jar app.jar
 
 CMD ["java", "-jar", "app.jar"]
